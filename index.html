@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile Legends Tournament Bracket</title>
+    <title>MLBB 5-Day Tournament Schedule</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
             padding: 20px;
             min-height: 100vh;
         }
@@ -23,53 +23,200 @@
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.98);
             border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            box-shadow: 0 15px 60px rgba(0, 0, 0, 0.4);
         }
         
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 3px solid #2a5298;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 4px solid #e74c3c;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            color: white;
         }
         
         .header h1 {
-            color: #1e3c72;
-            font-size: 2.5em;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header h2 {
+            font-size: 1.5em;
+            opacity: 0.95;
+        }
+
+        .schedule-overview {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .schedule-overview h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .day-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .day-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .day-card h3 {
+            font-size: 1.5em;
             margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .day-card .matches {
+            list-style: none;
+            padding: 0;
+        }
+
+        .day-card .matches li {
+            padding: 10px;
+            margin: 8px 0;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .day-card .format {
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        
+        .teams-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .team-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+            border-color: #f39c12;
+        }
+        
+        .team-card.team1 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .team-card.team2 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .team-card.team3 {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .team-card.team4 {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        .team-card h3 {
+            color: white;
+            font-size: 2em;
+            margin-bottom: 15px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .team-card .player-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .team-card .player-list li {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
         
         .rules {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
+            padding: 25px;
             border-radius: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             color: white;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
         
         .rules h2 {
-            margin-bottom: 15px;
-            font-size: 1.5em;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            text-align: center;
         }
         
         .rules ul {
             list-style: none;
             padding-left: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
         }
         
         .rules li {
-            padding: 8px 0;
-            padding-left: 25px;
+            padding: 12px 15px;
+            padding-left: 40px;
             position: relative;
             font-size: 1.1em;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
         }
         
         .rules li:before {
             content: "⚔️";
             position: absolute;
-            left: 0;
+            left: 12px;
+            font-size: 1.3em;
         }
         
         .bracket-section {
@@ -77,15 +224,17 @@
         }
         
         .bracket-title {
-            background: linear-gradient(90deg, #ff6b6b, #ee5a6f);
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
             color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
             text-align: center;
-            font-size: 1.8em;
+            font-size: 2em;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
         
         .lower-bracket-title {
@@ -94,178 +243,218 @@
         
         .bracket {
             display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
-            gap: 50px;
-            padding: 20px;
+            justify-content: space-around;
+            align-items: center;
+            gap: 60px;
+            padding: 30px;
             overflow-x: auto;
         }
         
         .round {
             display: flex;
             flex-direction: column;
-            gap: 30px;
-            min-width: 220px;
+            gap: 50px;
+            min-width: 280px;
         }
         
         .round-title {
             text-align: center;
             font-weight: bold;
-            font-size: 1.2em;
-            color: #2a5298;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: rgba(42, 82, 152, 0.1);
-            border-radius: 8px;
+            font-size: 1.4em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .day-badge {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        .format-badge {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-top: 5px;
+            font-weight: bold;
         }
         
         .match {
             background: white;
-            border: 3px solid #2a5298;
-            border-radius: 12px;
-            padding: 15px;
-            min-width: 220px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            border: 4px solid #3498db;
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 280px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
         }
         
         .match:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            border-color: #2ecc71;
         }
         
-        .player {
-            padding: 12px;
-            margin: 5px 0;
+        .team {
+            padding: 15px;
+            margin: 8px 0;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: bold;
             text-align: center;
-            font-size: 1em;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            font-size: 1.2em;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             transition: all 0.2s ease;
+            cursor: pointer;
         }
         
-        .player:hover {
-            transform: scale(1.02);
+        .team:hover {
+            transform: scale(1.03);
         }
         
-        .player.winner {
+        .team.winner {
             background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            border: 2px solid #11998e;
+            border: 3px solid #0fb89d;
+            box-shadow: 0 0 20px rgba(17, 153, 142, 0.5);
         }
         
-        .player.loser {
+        .team.loser {
             background: linear-gradient(135deg, #bdc3c7 0%, #95a5a6 100%);
-            opacity: 0.6;
+            opacity: 0.5;
+        }
+        
+        .team.team1-color {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .team.team2-color {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .team.team3-color {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .team.team4-color {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
         }
         
         .vs {
             text-align: center;
             font-weight: bold;
-            color: #ff6b6b;
-            margin: 8px 0;
-            font-size: 1.1em;
-        }
-        
-        .bye {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            color: #666;
-            font-style: italic;
+            color: #e74c3c;
+            margin: 10px 0;
+            font-size: 1.3em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
         
         .tbd {
-            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
-            color: #999;
+            background: linear-gradient(135deg, #dfe6e9 0%, #b2bec3 100%);
+            color: #636e72;
             font-style: italic;
         }
         
         .grand-final-box {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border: 4px solid #ff6b6b;
-            padding: 25px;
-            border-radius: 15px;
+            border: 5px solid #e74c3c;
+            padding: 35px;
+            border-radius: 20px;
             text-align: center;
-            margin-top: 30px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            margin-top: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
         }
         
         .grand-final-box h2 {
             color: white;
-            font-size: 2em;
-            margin-bottom: 20px;
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
         }
         
         .lower-bracket .match {
             border-color: #f093fb;
         }
         
-        .lower-bracket .player {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
-        
-        .lower-bracket .player.winner {
-            background: linear-gradient(135deg, #f5576c 0%, #d63031 100%);
-            border: 2px solid #d63031;
-        }
-        
         .empty-bracket {
             text-align: center;
-            padding: 60px 40px;
-            background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
-            border: 3px dashed #f093fb;
-            border-radius: 15px;
-            margin: 20px;
+            padding: 70px 50px;
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.15) 0%, rgba(245, 87, 108, 0.15) 100%);
+            border: 4px dashed #f093fb;
+            border-radius: 20px;
+            margin: 30px;
         }
         
         .empty-bracket h2 {
             color: #f5576c;
-            font-size: 2.2em;
-            margin-bottom: 20px;
+            font-size: 2.5em;
+            margin-bottom: 25px;
             animation: pulse 2s infinite;
         }
         
         .empty-bracket p {
-            color: #666;
-            font-size: 1.2em;
-            line-height: 1.8;
+            color: #555;
+            font-size: 1.3em;
+            line-height: 2;
         }
         
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
         }
 
         .controls {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: rgba(42, 82, 152, 0.1);
-            border-radius: 10px;
+            margin-bottom: 40px;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1) 0%, rgba(41, 128, 185, 0.1) 100%);
+            border-radius: 12px;
+            border: 2px solid #3498db;
         }
         
         .controls button {
-            padding: 12px 30px;
-            margin: 5px;
-            font-size: 1.1em;
+            padding: 15px 40px;
+            margin: 8px;
+            font-size: 1.2em;
             font-weight: bold;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
         }
         
         .controls .reset-btn {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
             color: white;
         }
         
         .controls .reset-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        .team-members {
+            font-size: 0.75em;
+            opacity: 0.9;
+            margin-top: 5px;
         }
 
         @media (max-width: 768px) {
@@ -275,15 +464,19 @@
             }
             
             .header h1 {
-                font-size: 1.8em;
+                font-size: 2em;
             }
             
-            .rules li {
-                font-size: 0.95em;
+            .teams-section {
+                grid-template-columns: 1fr;
             }
             
-            .match {
-                min-width: 100%;
+            .rules ul {
+                grid-template-columns: 1fr;
+            }
+
+            .schedule-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -291,19 +484,108 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🏆 Mobile Legends Tournament 🏆</h1>
-            <h3>Double Elimination Bracket</h3>
+            <h1>🏆 MOBILE LEGENDS TOURNAMENT 🏆</h1>
+            <h2>5-Day Team Battle Championship</h2>
+        </div>
+
+        <!-- 5-DAY SCHEDULE -->
+        <div class="schedule-overview">
+            <h2>📅 5-DAY TOURNAMENT SCHEDULE</h2>
+            <div class="schedule-grid">
+                <div class="day-card">
+                    <h3>📅 Day 1 - Monday</h3>
+                    <ul class="matches">
+                        <li>Semi-Final 1<br>Team 1 vs Team 2</li>
+                    </ul>
+                    <div class="format">BO3 (Best of 3)</div>
+                </div>
+
+                <div class="day-card">
+                    <h3>📅 Day 2 - Tuesday</h3>
+                    <ul class="matches">
+                        <li>Semi-Final 2<br>Team 3 vs Team 4</li>
+                    </ul>
+                    <div class="format">BO3 (Best of 3)</div>
+                </div>
+
+                <div class="day-card">
+                    <h3>📅 Day 3 - Wednesday</h3>
+                    <ul class="matches">
+                        <li>Upper Final<br>Winner SF1 vs Winner SF2</li>
+                    </ul>
+                    <div class="format">BO3 (Best of 3)</div>
+                </div>
+
+                <div class="day-card">
+                    <h3>📅 Day 4 - Thursday</h3>
+                    <ul class="matches">
+                        <li>Lower Bracket Round 1<br>Loser SF1 vs Loser SF2</li>
+                        <li>Lower Final<br>Winner LB vs Loser UF</li>
+                    </ul>
+                    <div class="format">BO3 (Best of 3)</div>
+                </div>
+
+                <div class="day-card" style="grid-column: span 2;">
+                    <h3>🏆 Day 5 - Friday (FINALS)</h3>
+                    <ul class="matches">
+                        <li>GRAND FINALS<br>UB Champion vs LB Champion</li>
+                        <li style="font-size: 0.9em; background: rgba(255, 215, 0, 0.3);">+ Bracket Reset if needed</li>
+                    </ul>
+                    <div class="format" style="background: rgba(255, 215, 0, 0.5); font-size: 1.2em;">BO5 (Best of 5) 🔥</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- TEAMS DISPLAY -->
+        <div class="teams-section">
+            <div class="team-card team1">
+                <h3>TEAM 1</h3>
+                <ul class="player-list">
+                    <li>Kevin</li>
+                    <li>Heng Bunhuy</li>
+                    <li>CHHIM Chandarin</li>
+                </ul>
+            </div>
+            
+            <div class="team-card team2">
+                <h3>TEAM 2</h3>
+                <ul class="player-list">
+                    <li>Nhang Sokheang</li>
+                    <li>Dom Davinci</li>
+                    <li>Mealtey (Cassie)</li>
+                </ul>
+            </div>
+            
+            <div class="team-card team3">
+                <h3>TEAM 3</h3>
+                <ul class="player-list">
+                    <li>Vanna-វណ្ណា</li>
+                    <li>Khut S. Rith</li>
+                    <li>h Socheat</li>
+                </ul>
+            </div>
+            
+            <div class="team-card team4">
+                <h3>TEAM 4</h3>
+                <ul class="player-list">
+                    <li>Thong Inn Inn</li>
+                    <li>Lineat Long</li>
+                    <li>Koem Rattanak</li>
+                </ul>
+            </div>
         </div>
         
         <div class="rules">
             <h2>📋 Tournament Rules</h2>
             <ul>
-                <li><strong>Heroes Allowed:</strong> Assassin, Fighter, Mage only</li>
-                <li><strong>NO Marksman (MM) or Retribution</strong></li>
-                <li><strong>Game Mode:</strong> Normal Match</li>
-                <li><strong>Win Conditions:</strong> Destroy final crystal OR get 3 kills</li>
-                <li><strong>Format:</strong> Double Elimination (2 lives per player)</li>
-                <li><strong>Players:</strong> 11 competitors</li>
+                <li><strong>Format:</strong> 5v5 Normal Match</li>
+                <li><strong>Heroes:</strong> All roles allowed</li>
+                <li><strong>Jungle/Retribution:</strong> Allowed</li>
+                <li><strong>Win Condition:</strong> Destroy enemy base</li>
+                <li><strong>Tournament:</strong> Double Elimination</li>
+                <li><strong>Regular Matches:</strong> BO3 (Best of 3)</li>
+                <li><strong>Grand Finals:</strong> BO5 (Best of 5)</li>
+                <li><strong>Duration:</strong> 5 Days Total</li>
             </ul>
         </div>
 
@@ -316,78 +598,36 @@
             <div class="bracket-title">⚔️ UPPER BRACKET ⚔️</div>
             
             <div class="bracket">
-                <!-- Round 1 -->
+                <!-- Semi Finals -->
                 <div class="round">
-                    <div class="round-title">Round 1</div>
+                    <div class="round-title">Semi Finals</div>
                     
-                    <div class="match" data-match="ub-1-1" onclick="selectWinner(this)">
-                        <div class="player" data-player="Kevin">Kevin</div>
+                    <div class="match" data-match="ub-sf-1" onclick="selectWinner(this)">
+                        <div class="team team1-color" data-team="Team1">
+                            <div>TEAM 1</div>
+                            <div class="team-members">Kevin • Bunhuy • Chandarin</div>
+                        </div>
                         <div class="vs">VS</div>
-                        <div class="player" data-player="Nhang Sokheang">Nhang Sokheang</div>
+                        <div class="team team2-color" data-team="Team2">
+                            <div>TEAM 2</div>
+                            <div class="team-members">Sokheang • Davinci • Cassie</div>
+                        </div>
+                        <div class="day-badge">Day 1 - Monday</div>
+                        <div class="format-badge">BO3</div>
                     </div>
                     
-                    <div class="match" data-match="ub-1-2" onclick="selectWinner(this)">
-                        <div class="player" data-player="CHHIM Chandarin">CHHIM Chandarin</div>
+                    <div class="match" data-match="ub-sf-2" onclick="selectWinner(this)" style="margin-top: 80px;">
+                        <div class="team team3-color" data-team="Team3">
+                            <div>TEAM 3</div>
+                            <div class="team-members">Vanna • Rith • Socheat</div>
+                        </div>
                         <div class="vs">VS</div>
-                        <div class="player" data-player="Thong Inn Inn">Thong Inn Inn</div>
-                    </div>
-                    
-                    <div class="match" data-match="ub-1-3" onclick="selectWinner(this)">
-                        <div class="player" data-player="h Socheat">h Socheat</div>
-                        <div class="vs">VS</div>
-                        <div class="player" data-player="Dom Davinci">Dom Davinci</div>
-                    </div>
-                    
-                    <div class="match" data-match="ub-1-4" onclick="selectWinner(this)">
-                        <div class="player" data-player="Heng Bunhuy">Heng Bunhuy</div>
-                        <div class="vs">VS</div>
-                        <div class="player" data-player="Vanna-វណ្ណា">Vanna-វណ្ណា</div>
-                    </div>
-                    
-                    <div class="match" data-match="ub-1-5" onclick="selectWinner(this)">
-                        <div class="player" data-player="Koem Rattanak">Koem Rattanak</div>
-                        <div class="vs">VS</div>
-                        <div class="player" data-player="Lineat Long">Lineat Long</div>
-                    </div>
-                </div>
-                
-                <!-- Round 2 -->
-                <div class="round">
-                    <div class="round-title">Round 2</div>
-                    
-                    <div class="match" data-match="ub-2-1" onclick="selectWinner(this)">
-                        <div class="player tbd" data-player="TBD">Winner Match 1</div>
-                        <div class="vs">VS</div>
-                        <div class="player tbd" data-player="TBD">Winner Match 2</div>
-                    </div>
-                    
-                    <div class="match" data-match="ub-2-2" onclick="selectWinner(this)">
-                        <div class="player tbd" data-player="TBD">Winner Match 3</div>
-                        <div class="vs">VS</div>
-                        <div class="player tbd" data-player="TBD">Winner Match 4</div>
-                    </div>
-                    
-                    <div class="match" data-match="ub-2-3" onclick="selectWinner(this)">
-                        <div class="player tbd" data-player="TBD">Winner Match 5</div>
-                        <div class="vs">VS</div>
-                        <div class="player" data-player="Mealtey (Cassie)">Mealtey (Cassie)</div>
-                    </div>
-                </div>
-                
-                <!-- Round 3 - Semi Finals -->
-                <div class="round">
-                    <div class="round-title">Semi-Finals</div>
-                    
-                    <div class="match" data-match="ub-3-1" onclick="selectWinner(this)">
-                        <div class="player tbd" data-player="TBD">Winner R2-M1</div>
-                        <div class="vs">VS</div>
-                        <div class="player tbd" data-player="TBD">Winner R2-M2</div>
-                    </div>
-                    
-                    <div class="match" data-match="ub-3-2" onclick="selectWinner(this)" style="margin-top: 60px;">
-                        <div class="player tbd" data-player="TBD">Winner R2-M3</div>
-                        <div class="vs">VS</div>
-                        <div class="player tbd" data-player="TBD">TBD</div>
+                        <div class="team team4-color" data-team="Team4">
+                            <div>TEAM 4</div>
+                            <div class="team-members">Inn Inn • Long • Rattanak</div>
+                        </div>
+                        <div class="day-badge">Day 2 - Tuesday</div>
+                        <div class="format-badge">BO3</div>
                     </div>
                 </div>
                 
@@ -396,9 +636,15 @@
                     <div class="round-title">Upper Finals</div>
                     
                     <div class="match" data-match="ub-finals" onclick="selectWinner(this)">
-                        <div class="player tbd" data-player="TBD">Winner SF-1</div>
+                        <div class="team tbd" data-team="TBD">
+                            <div>Winner SF-1</div>
+                        </div>
                         <div class="vs">VS</div>
-                        <div class="player tbd" data-player="TBD">Winner SF-2</div>
+                        <div class="team tbd" data-team="TBD">
+                            <div>Winner SF-2</div>
+                        </div>
+                        <div class="day-badge">Day 3 - Wednesday</div>
+                        <div class="format-badge">BO3</div>
                     </div>
                 </div>
             </div>
@@ -411,9 +657,9 @@
             <div class="empty-bracket" id="emptyLowerBracket">
                 <h2>⚔️ NO LOSERS YET ⚔️</h2>
                 <p>
-                    The Lower Bracket will fill up as the Upper Bracket matches are completed.<br>
-                    Players who lose in the Upper Bracket drop here for their second chance!<br>
-                    <strong style="color: #f5576c;">⚠️ Lose twice = ELIMINATED from tournament ⚠️</strong>
+                    The Lower Bracket will fill up as Upper Bracket matches are completed.<br>
+                    Teams who lose in Upper Bracket drop here for their second chance!<br>
+                    <strong style="color: #f5576c; font-size: 1.2em;">⚠️ Lose twice = ELIMINATED ⚠️</strong>
                 </p>
             </div>
 
@@ -422,62 +668,16 @@
                 <div class="round">
                     <div class="round-title">LB Round 1</div>
                     
-                    <div class="match" data-match="lb-1-1" onclick="selectWinner(this)">
-                        <div class="player tbd" data-player="TBD">Loser M1</div>
+                    <div class="match" data-match="lb-r1" onclick="selectWinner(this)">
+                        <div class="team tbd" data-team="TBD">
+                            <div>Loser SF-1</div>
+                        </div>
                         <div class="vs">VS</div>
-                        <div class="player tbd" data-player="TBD">Loser M2</div>
-                    </div>
-                    
-                    <div class="match" data-match="lb-1-2" onclick="selectWinner(this)">
-                        <div class="player tbd" data-player="TBD">Loser M3</div>
-                        <div class="vs">VS</div>
-                        <div class="player tbd" data-player="TBD">Loser M4</div>
-                    </div>
-                    
-                    <div class="match" data-match="lb-1-3" onclick="selectWinner(this)">
-                        <div class="player tbd" data-player="TBD">Loser M5</div>
-                        <div class="vs">VS</div>
-                        <div class="player tbd" data-player="TBD">TBD</div>
-                    </div>
-                </div>
-                
-                <!-- Lower Round 2 -->
-                <div class="round">
-                    <div class="round-title">LB Round 2</div>
-                    
-                    <div class="match" data-match="lb-2-1" onclick="selectWinner(this)">
-                        <div class="player tbd" data-player="TBD">Winner LB-M1</div>
-                        <div class="vs">VS</div>
-                        <div class="player tbd" data-player="TBD">Loser UB-R2-M1</div>
-                    </div>
-                    
-                    <div class="match" data-match="lb-2-2" onclick="selectWinner(this)">
-                        <div class="player tbd" data-player="TBD">Winner LB-M2</div>
-                        <div class="vs">VS</div>
-                        <div class="player tbd" data-player="TBD">Loser UB-R2-M2</div>
-                    </div>
-                    
-                    <div class="match" data-match="lb-2-3" onclick="selectWinner(this)">
-                        <div class="player tbd" data-player="TBD">Winner LB-M3</div>
-                        <div class="vs">VS</div>
-                        <div class="player tbd" data-player="TBD">Loser UB-R2-M3</div>
-                    </div>
-                </div>
-                
-                <!-- Lower Round 3 -->
-                <div class="round">
-                    <div class="round-title">LB Round 3</div>
-                    
-                    <div class="match" data-match="lb-3-1" onclick="selectWinner(this)">
-                        <div class="player tbd" data-player="TBD">Winner LB-R2-M1</div>
-                        <div class="vs">VS</div>
-                        <div class="player tbd" data-player="TBD">Winner LB-R2-M2</div>
-                    </div>
-                    
-                    <div class="match" data-match="lb-3-2" onclick="selectWinner(this)" style="margin-top: 60px;">
-                        <div class="player tbd" data-player="TBD">Winner LB-R2-M3</div>
-                        <div class="vs">VS</div>
-                        <div class="player tbd" data-player="TBD">Loser UB-SF</div>
+                        <div class="team tbd" data-team="TBD">
+                            <div>Loser SF-2</div>
+                        </div>
+                        <div class="day-badge">Day 4 - Thursday</div>
+                        <div class="format-badge">BO3</div>
                     </div>
                 </div>
                 
@@ -486,9 +686,15 @@
                     <div class="round-title">Lower Finals</div>
                     
                     <div class="match" data-match="lb-finals" onclick="selectWinner(this)">
-                        <div class="player tbd" data-player="TBD">Winner LB-R3-M1</div>
+                        <div class="team tbd" data-team="TBD">
+                            <div>Winner LB-R1</div>
+                        </div>
                         <div class="vs">VS</div>
-                        <div class="player tbd" data-player="TBD">Winner LB-R3-M2</div>
+                        <div class="team tbd" data-team="TBD">
+                            <div>Loser UB Finals</div>
+                        </div>
+                        <div class="day-badge">Day 4 - Thursday</div>
+                        <div class="format-badge">BO3</div>
                     </div>
                 </div>
             </div>
@@ -496,14 +702,19 @@
         
         <!-- GRAND FINALS -->
         <div class="grand-final-box">
-            <h2>👑 GRAND FINALS 👑</h2>
-            <div class="match" data-match="grand-finals" onclick="selectWinner(this)" style="max-width: 400px; margin: 20px auto;">
-                <div class="player tbd" data-player="TBD">Upper Bracket Winner</div>
+            <h2>👑 GRAND FINALS - DAY 5 (FRIDAY) 👑</h2>
+            <div class="match" data-match="grand-finals" onclick="selectWinner(this)" style="max-width: 500px; margin: 25px auto;">
+                <div class="team tbd" data-team="TBD">
+                    <div>Upper Bracket Champion</div>
+                </div>
                 <div class="vs">VS</div>
-                <div class="player tbd" data-player="TBD">Lower Bracket Winner</div>
+                <div class="team tbd" data-team="TBD">
+                    <div>Lower Bracket Champion</div>
+                </div>
+                <div class="format-badge" style="background: gold; color: #000; font-size: 1.1em; margin-top: 15px;">BO5 (Best of 5) 🔥</div>
             </div>
-            <p style="color: white; margin-top: 15px; font-size: 1.1em;">
-                <strong>Note:</strong> If Lower Bracket winner wins, Grand Finals resets (one more match)!
+            <p style="color: white; margin-top: 20px; font-size: 1.2em; font-weight: bold;">
+                ⚠️ BRACKET RESET: If Lower Bracket team wins, one more BO5 match will be played!
             </p>
         </div>
     </div>
@@ -512,15 +723,39 @@
         // Tournament state management
         let tournamentState = {
             matches: {},
-            losers: []
+            losers: [],
+            winners: {}
+        };
+
+        const teamData = {
+            'Team1': {
+                number: '1',
+                color: 'team1-color',
+                members: 'Kevin • Bunhuy • Chandarin'
+            },
+            'Team2': {
+                number: '2',
+                color: 'team2-color',
+                members: 'Sokheang • Davinci • Cassie'
+            },
+            'Team3': {
+                number: '3',
+                color: 'team3-color',
+                members: 'Vanna • Rith • Socheat'
+            },
+            'Team4': {
+                number: '4',
+                color: 'team4-color',
+                members: 'Inn Inn • Long • Rattanak'
+            }
         };
 
         // Select winner in a match
         function selectWinner(matchElement) {
-            const players = matchElement.querySelectorAll('.player:not(.tbd):not(.bye)');
+            const teams = matchElement.querySelectorAll('.team:not(.tbd)');
             
-            if (players.length !== 2) {
-                alert('This match is not ready yet!');
+            if (teams.length !== 2) {
+                alert('⚠️ This match is not ready yet! Wait for previous matches to complete.');
                 return;
             }
 
@@ -528,80 +763,161 @@
             
             // Check if already decided
             if (tournamentState.matches[matchId]) {
-                const confirm = window.confirm('This match already has a winner. Do you want to change it?');
-                if (!confirm) return;
+                const confirmChange = confirm('This match already has a winner. Do you want to change it?');
+                if (!confirmChange) return;
             }
 
-            // Toggle selection
-            players.forEach(player => {
-                player.onclick = function(e) {
+            // Let user click on teams to select winner
+            teams.forEach(team => {
+                team.style.cursor = 'pointer';
+                team.onclick = function(e) {
                     e.stopPropagation();
-                    const playerName = this.getAttribute('data-player');
+                    const teamName = this.getAttribute('data-team');
                     
                     // Mark winner and loser
-                    players.forEach(p => {
-                        p.classList.remove('winner', 'loser');
+                    teams.forEach(t => {
+                        t.classList.remove('winner', 'loser');
                     });
                     
                     this.classList.add('winner');
-                    const otherPlayer = Array.from(players).find(p => p !== this);
-                    otherPlayer.classList.add('loser');
+                    const otherTeam = Array.from(teams).find(t => t !== this);
+                    otherTeam.classList.add('loser');
                     
                     // Save result
+                    const loserName = otherTeam.getAttribute('data-team');
                     tournamentState.matches[matchId] = {
-                        winner: playerName,
-                        loser: otherPlayer.getAttribute('data-player')
+                        winner: teamName,
+                        loser: loserName
                     };
                     
                     // Update bracket
-                    setTimeout(() => updateBracket(), 500);
+                    setTimeout(() => {
+                        updateBracket(matchId, teamName, loserName);
+                        saveState();
+                    }, 500);
                 };
             });
         }
 
-        // Update bracket with winners
-        function updateBracket() {
+        // Update bracket with winners and losers
+        function updateBracket(matchId, winner, loser) {
             // Show lower bracket when first loser appears
             if (Object.keys(tournamentState.matches).length > 0) {
                 document.getElementById('emptyLowerBracket').style.display = 'none';
                 document.getElementById('lowerBracketContent').style.display = 'flex';
             }
 
-            // Here you would add logic to propagate winners to next rounds
-            // This is a simplified version - full implementation would track all matches
-            
-            console.log('Tournament State:', tournamentState);
+            // Handle Upper Bracket progression
+            if (matchId === 'ub-sf-1') {
+                updateMatch('ub-finals', 0, winner);
+                updateMatch('lb-r1', 0, loser);
+            } else if (matchId === 'ub-sf-2') {
+                updateMatch('ub-finals', 1, winner);
+                updateMatch('lb-r1', 1, loser);
+            } else if (matchId === 'ub-finals') {
+                updateMatch('grand-finals', 0, winner);
+                updateMatch('lb-finals', 1, loser);
+            }
+
+            // Handle Lower Bracket progression
+            if (matchId === 'lb-r1') {
+                updateMatch('lb-finals', 0, winner);
+            } else if (matchId === 'lb-finals') {
+                updateMatch('grand-finals', 1, winner);
+            }
+        }
+
+        // Update a specific team slot in a match
+        function updateMatch(matchId, slotIndex, teamName) {
+            const match = document.querySelector(`[data-match="${matchId}"]`);
+            if (!match) return;
+
+            const teams = match.querySelectorAll('.team');
+            if (teams[slotIndex] && teamData[teamName]) {
+                const team = teams[slotIndex];
+                team.classList.remove('tbd');
+                team.classList.add(teamData[teamName].color);
+                team.setAttribute('data-team', teamName);
+                team.innerHTML = `
+                    <div>TEAM ${teamData[teamName].number}</div>
+                    <div class="team-members">${teamData[teamName].members}</div>
+                `;
+            }
         }
 
         // Reset tournament
         function resetBracket() {
-            if (confirm('Are you sure you want to reset the entire tournament?')) {
-                tournamentState = { matches: {}, losers: [] };
+            if (confirm('⚠️ Are you sure you want to reset the entire tournament?')) {
+                tournamentState = { matches: {}, losers: [], winners: {} };
                 
-                // Reset all player states
-                document.querySelectorAll('.player').forEach(player => {
-                    player.classList.remove('winner', 'loser');
+                // Reset all team states
+                document.querySelectorAll('.team').forEach(team => {
+                    team.classList.remove('winner', 'loser');
+                    team.style.cursor = '';
+                    team.onclick = null;
+                });
+
+                // Reset TBD slots
+                document.querySelectorAll('[data-match="ub-finals"] .team').forEach((team, i) => {
+                    team.className = 'team tbd';
+                    team.setAttribute('data-team', 'TBD');
+                    team.innerHTML = `<div>Winner SF-${i + 1}</div>`;
+                });
+
+                document.querySelectorAll('[data-match="lb-r1"] .team').forEach((team, i) => {
+                    team.className = 'team tbd';
+                    team.setAttribute('data-team', 'TBD');
+                    team.innerHTML = `<div>Loser SF-${i + 1}</div>`;
+                });
+
+                document.querySelectorAll('[data-match="lb-finals"] .team').forEach((team, i) => {
+                    team.className = 'team tbd';
+                    team.setAttribute('data-team', 'TBD');
+                    team.innerHTML = i === 0 ? '<div>Winner LB-R1</div>' : '<div>Loser UB Finals</div>';
+                });
+
+                document.querySelectorAll('[data-match="grand-finals"] .team').forEach((team, i) => {
+                    team.className = 'team tbd';
+                    team.setAttribute('data-team', 'TBD');
+                    team.innerHTML = i === 0 ? '<div>Upper Bracket Champion</div>' : '<div>Lower Bracket Champion</div>';
                 });
                 
                 // Hide lower bracket
                 document.getElementById('emptyLowerBracket').style.display = 'block';
                 document.getElementById('lowerBracketContent').style.display = 'none';
                 
-                alert('Tournament has been reset!');
+                localStorage.removeItem('mlbbTeamTournament');
+                alert('✅ Tournament has been reset!');
             }
         }
 
         // Save state to localStorage
         function saveState() {
-            localStorage.setItem('mlbbTournament', JSON.stringify(tournamentState));
+            localStorage.setItem('mlbbTeamTournament', JSON.stringify(tournamentState));
         }
 
         // Load state from localStorage
         function loadState() {
-            const saved = localStorage.getItem('mlbbTournament');
+            const saved = localStorage.getItem('mlbbTeamTournament');
             if (saved) {
                 tournamentState = JSON.parse(saved);
-                updateBracket();
+                // Reconstruct bracket from saved state
+                Object.keys(tournamentState.matches).forEach(matchId => {
+                    const data = tournamentState.matches[matchId];
+                    const match = document.querySelector(`[data-match="${matchId}"]`);
+                    if (match) {
+                        const teams = match.querySelectorAll('.team');
+                        teams.forEach(team => {
+                            const teamName = team.getAttribute('data-team');
+                            if (teamName === data.winner) {
+                                team.classList.add('winner');
+                            } else if (teamName === data.loser) {
+                                team.classList.add('loser');
+                            }
+                        });
+                        updateBracket(matchId, data.winner, data.loser);
+                    }
+                });
             }
         }
 

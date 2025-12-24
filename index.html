@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Registration</title>
+    <title>Team Registration System</title>
     <style>
         * {
             margin: 0;
@@ -11,276 +11,473 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-blue: #3498db;
+            --accent-green: #27ae60;
+            --accent-orange: #e67e22;
+            --success-color: #27ae60;
+            --error-color: #e74c3c;
+            --background: #ecf0f1;
+            --card-bg: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d;
+            --border-color: #bdc3c7;
+        }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            background: var(--background);
             min-height: 100vh;
-            padding: 20px;
+            padding: 40px 20px;
+            line-height: 1.6;
+            color: var(--text-primary);
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
         
-        h1 {
+        .header {
             text-align: center;
-            color: #333;
-            margin-bottom: 30px;
+            margin-bottom: 50px;
         }
         
-        .registration-form {
-            background: #f8f9fa;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 30px;
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+        
+        .registration-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .registration-card h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 25px;
         }
         
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 25px;
         }
         
-        label {
+        .form-group label {
             display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: 600;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
         }
         
-        input[type="text"] {
+        .form-group input[type="text"] {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
+            padding: 14px 16px;
+            font-size: 1rem;
+            border: 2px solid var(--border-color);
             border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+            transition: all 0.3s ease;
+            font-family: inherit;
         }
         
-        input[type="text"]:focus {
+        .form-group input[type="text"]:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
         
-        .team-selection {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .team-btn {
-            flex: 1;
-            padding: 15px;
-            border: 2px solid #ddd;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        
-        .team-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .team-btn.team1 {
-            border-color: #4CAF50;
-            color: #4CAF50;
-        }
-        
-        .team-btn.team1.selected {
-            background: #4CAF50;
-            color: white;
-        }
-        
-        .team-btn.team2 {
-            border-color: #2196F3;
-            color: #2196F3;
-        }
-        
-        .team-btn.team2.selected {
-            background: #2196F3;
-            color: white;
-        }
-        
-        .team-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        .submit-btn {
+        .btn-primary {
             width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 16px;
+            background: var(--primary-color);
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 18px;
+            font-size: 1.05rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.3s ease;
+            font-family: inherit;
         }
         
-        .submit-btn:hover {
-            transform: translateY(-2px);
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
         
-        .submit-btn:disabled {
-            opacity: 0.6;
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .btn-primary:disabled {
+            background: var(--border-color);
             cursor: not-allowed;
+            transform: none;
         }
         
-        .teams-display {
+        .info-text {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+        
+        .teams-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
         }
         
-        .team-box {
-            border-radius: 10px;
-            padding: 20px;
-            color: white;
+        .team-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-top: 4px solid;
         }
         
-        .team-box.team1 {
-            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        .team-card.team-1 {
+            border-top-color: var(--accent-blue);
         }
         
-        .team-box.team2 {
-            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+        .team-card.team-2 {
+            border-top-color: var(--accent-green);
         }
         
-        .team-box h2 {
-            margin-bottom: 15px;
-            font-size: 24px;
+        .team-card.team-3 {
+            border-top-color: var(--accent-orange);
+        }
+        
+        .team-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .team-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
         }
         
         .team-count {
-            font-size: 14px;
-            margin-bottom: 15px;
-            opacity: 0.9;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: var(--background);
+            color: var(--text-secondary);
         }
         
-        .member-list {
+        .team-count.full {
+            background: var(--error-color);
+            color: white;
+        }
+        
+        .members-list {
             list-style: none;
         }
         
         .member-item {
-            background: rgba(255,255,255,0.2);
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 8px;
+            padding: 12px 0;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--background);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
+        .member-item:last-child {
+            border-bottom: none;
+        }
+        
+        .member-number {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: var(--background);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-right: 12px;
+        }
+        
         .delete-btn {
-            background: rgba(255,255,255,0.3);
+            background: transparent;
             border: none;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
+            color: var(--error-color);
             cursor: pointer;
-            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            opacity: 0.7;
         }
         
         .delete-btn:hover {
-            background: rgba(255,255,255,0.5);
+            opacity: 1;
+            background: rgba(231, 76, 60, 0.1);
         }
         
-        .message {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+        .empty-state {
             text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .alert {
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-weight: 500;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .alert.success {
+            background: rgba(39, 174, 96, 0.1);
+            color: var(--success-color);
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .alert.error {
+            background: rgba(231, 76, 60, 0.1);
+            color: var(--error-color);
+            border-left: 4px solid var(--error-color);
+        }
+        
+        .loading-overlay {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--background);
+            border-top-color: var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .stats-bar {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .stats-bar h3 {
+            font-size: 1.1rem;
             font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
         }
         
-        .message.success {
-            background: #d4edda;
-            color: #155724;
+        .stats-numbers {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
         }
         
-        .message.error {
-            background: #f8d7da;
-            color: #721c24;
-        }
-        
-        .reset-btn {
-            margin-top: 20px;
-            width: 100%;
-            padding: 10px;
-            background: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        
-        .reset-btn:hover {
-            background: #c82333;
-        }
-
-        .loading {
+        .stat-item {
             text-align: center;
-            padding: 20px;
-            color: #666;
         }
-
-        @media (max-width: 600px) {
-            .teams-display {
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+        
+        .admin-controls {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .btn-reset {
+            padding: 12px 30px;
+            background: transparent;
+            color: var(--error-color);
+            border: 2px solid var(--error-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .btn-reset:hover {
+            background: var(--error-color);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .registration-card {
+                padding: 30px 20px;
+            }
+            
+            .teams-container {
                 grid-template-columns: 1fr;
+            }
+            
+            .stats-numbers {
+                gap: 25px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🏆 Team Registration</h1>
-        
-        <div id="message"></div>
-        <div id="loading" class="loading">Loading...</div>
-        
-        <div class="registration-form" id="registrationForm" style="display:none;">
-            <div class="form-group">
-                <label for="nameInput">Your Name:</label>
-                <input type="text" id="nameInput" placeholder="Enter your name" maxlength="50">
-            </div>
-            
-            <div class="team-selection">
-                <button class="team-btn team1" id="team1Btn" onclick="selectTeam(1)">
-                    Team 1 <span id="team1Count">(0/5)</span>
-                </button>
-                <button class="team-btn team2" id="team2Btn" onclick="selectTeam(2)">
-                    Team 2 <span id="team2Count">(0/5)</span>
-                </button>
-            </div>
-            
-            <button class="submit-btn" onclick="registerName()">Register</button>
+        <div class="header">
+            <h1>Team Registration System</h1>
+            <p>Enter your name to be randomly assigned to a team</p>
         </div>
         
-        <div class="teams-display" id="teamsDisplay" style="display:none;">
-            <div class="team-box team1">
-                <h2>Team 1</h2>
-                <div class="team-count"><span id="team1Display">0/5 slots filled</span></div>
-                <ul class="member-list" id="team1List"></ul>
-            </div>
-            
-            <div class="team-box team2">
-                <h2>Team 2</h2>
-                <div class="team-count"><span id="team2Display">0/5 slots filled</span></div>
-                <ul class="member-list" id="team2List"></ul>
-            </div>
+        <div id="loadingOverlay" class="loading-overlay">
+            <div class="loading-spinner"></div>
+            <p>Connecting to server...</p>
         </div>
         
-        <button class="reset-btn" id="resetBtn" onclick="resetAll()" style="display:none;">Reset All Teams</button>
+        <div id="mainContent" style="display:none;">
+            <div class="registration-card">
+                <h2>Register</h2>
+                
+                <div id="alertBox" class="alert"></div>
+                
+                <form id="registrationForm" onsubmit="registerName(event)">
+                    <div class="form-group">
+                        <label for="nameInput">Full Name</label>
+                        <input 
+                            type="text" 
+                            id="nameInput" 
+                            placeholder="Enter your full name" 
+                            maxlength="50"
+                            required
+                        >
+                    </div>
+                    
+                    <button type="submit" class="btn-primary" id="submitBtn">
+                        Join Team
+                    </button>
+                    
+                    <p class="info-text">
+                        You will be randomly assigned to one of three teams
+                    </p>
+                </form>
+            </div>
+            
+            <div class="stats-bar">
+                <h3>Registration Statistics</h3>
+                <div class="stats-numbers">
+                    <div class="stat-item">
+                        <span class="stat-value" id="totalPlayers">0</span>
+                        <span class="stat-label">Total Players</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="availableSlots">15</span>
+                        <span class="stat-label">Available Slots</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="teams-container" id="teamsContainer">
+                <div class="team-card team-1">
+                    <div class="team-header">
+                        <span class="team-name">Team Alpha</span>
+                        <span class="team-count" id="team1Count">0/5</span>
+                    </div>
+                    <ul class="members-list" id="team1List">
+                        <li class="empty-state">No members yet</li>
+                    </ul>
+                </div>
+                
+                <div class="team-card team-2">
+                    <div class="team-header">
+                        <span class="team-name">Team Beta</span>
+                        <span class="team-count" id="team2Count">0/5</span>
+                    </div>
+                    <ul class="members-list" id="team2List">
+                        <li class="empty-state">No members yet</li>
+                    </ul>
+                </div>
+                
+                <div class="team-card team-3">
+                    <div class="team-header">
+                        <span class="team-name">Team Gamma</span>
+                        <span class="team-count" id="team3Count">0/5</span>
+                    </div>
+                    <ul class="members-list" id="team3List">
+                        <li class="empty-state">No members yet</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="admin-controls">
+                <button class="btn-reset" onclick="resetAll()">Reset All Teams</button>
+            </div>
+        </div>
     </div>
 
     <!-- Firebase SDK -->
@@ -288,24 +485,23 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
     <script>
-        // ⚠️ REPLACE THIS WITH YOUR FIREBASE CONFIG FROM STEP 3!
-const firebaseConfig = {
-    apiKey: "AIzaSyBCtMpRUf4FPJfZaMNw8COEEbZFFjoTkwI",
-    authDomain: "team-registration-78a5e.firebaseapp.com",
-    databaseURL: "https://team-registration-78a5e-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "team-registration-78a5e",
-    storageBucket: "team-registration-78a5e.firebasestorage.app",
-    messagingSenderId: "43533030700",
-    appId: "1:43533030700:web:03be14e6eda0e651530889"
-};
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBCtMpRUf4FPJfZaMNw8COEEbZFFjoTkwI",
+            authDomain: "team-registration-78a5e.firebaseapp.com",
+            databaseURL: "https://team-registration-78a5e-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "team-registration-78a5e",
+            storageBucket: "team-registration-78a5e.firebasestorage.app",
+            messagingSenderId: "43533030700",
+            appId: "1:43533030700:web:03be14e6eda0e651530889"
+        };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
         const teamsRef = database.ref('teams');
         
-        let selectedTeam = null;
-        let currentData = { team1: [], team2: [] };
+        let currentData = { team1: [], team2: [], team3: [] };
         
         // Listen for real-time updates
         teamsRef.on('value', (snapshot) => {
@@ -313,146 +509,205 @@ const firebaseConfig = {
             if (data) {
                 currentData = data;
             } else {
-                currentData = { team1: [], team2: [] };
+                currentData = { team1: [], team2: [], team3: [] };
+                teamsRef.set(currentData);
             }
             updateDisplay();
             
             // Hide loading, show content
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('registrationForm').style.display = 'block';
-            document.getElementById('teamsDisplay').style.display = 'grid';
-            document.getElementById('resetBtn').style.display = 'block';
+            document.getElementById('loadingOverlay').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+        }, (error) => {
+            document.getElementById('loadingOverlay').innerHTML = `
+                <div style="color: var(--error-color);">
+                    <p>⚠️ Connection Error</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Please check your internet connection and refresh the page.</p>
+                </div>
+            `;
+            console.error('Firebase error:', error);
         });
         
-        // Select team
-        function selectTeam(teamNum) {
-            selectedTeam = teamNum;
-            document.getElementById('team1Btn').classList.remove('selected');
-            document.getElementById('team2Btn').classList.remove('selected');
-            document.getElementById(`team${teamNum}Btn`).classList.add('selected');
-        }
-        
-        // Show message
-        function showMessage(text, type) {
-            const messageDiv = document.getElementById('message');
-            messageDiv.textContent = text;
-            messageDiv.className = `message ${type}`;
-            messageDiv.style.display = 'block';
+        // Show alert message
+        function showAlert(text, type) {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.textContent = text;
+            alertBox.className = `alert ${type}`;
+            alertBox.style.display = 'block';
             
             setTimeout(() => {
-                messageDiv.style.display = 'none';
-            }, 3000);
+                alertBox.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Find team with least members
+        function findAvailableTeam() {
+            const teamSizes = [
+                { team: 'team1', size: currentData.team1.length },
+                { team: 'team2', size: currentData.team2.length },
+                { team: 'team3', size: currentData.team3.length }
+            ];
+            
+            // Filter teams that aren't full
+            const availableTeams = teamSizes.filter(t => t.size < 5);
+            
+            if (availableTeams.length === 0) {
+                return null; // All teams full
+            }
+            
+            // Find teams with minimum size
+            const minSize = Math.min(...availableTeams.map(t => t.size));
+            const teamsWithMinSize = availableTeams.filter(t => t.size === minSize);
+            
+            // Randomly select from teams with minimum size
+            const randomIndex = Math.floor(Math.random() * teamsWithMinSize.length);
+            return teamsWithMinSize[randomIndex].team;
         }
         
         // Register name
-        function registerName() {
+        function registerName(event) {
+            event.preventDefault();
+            
             const nameInput = document.getElementById('nameInput');
+            const submitBtn = document.getElementById('submitBtn');
             const name = nameInput.value.trim();
             
             if (!name) {
-                showMessage('Please enter your name!', 'error');
+                showAlert('Please enter your name', 'error');
                 return;
             }
             
-            if (!selectedTeam) {
-                showMessage('Please select a team!', 'error');
+            // Check if name already exists in any team
+            const allNames = [...currentData.team1, ...currentData.team2, ...currentData.team3];
+            if (allNames.includes(name)) {
+                showAlert('This name is already registered!', 'error');
                 return;
             }
             
-            const teamKey = `team${selectedTeam}`;
+            // Find available team
+            const teamKey = findAvailableTeam();
             
-            // Check if team is full
-            if (currentData[teamKey].length >= 5) {
-                showMessage(`Team ${selectedTeam} is full!`, 'error');
+            if (!teamKey) {
+                showAlert('All teams are full! (15/15 players)', 'error');
                 return;
             }
             
-            // Check if name already exists in either team
-            if (currentData.team1.includes(name) || currentData.team2.includes(name)) {
-                showMessage('This name is already registered!', 'error');
-                return;
-            }
+            // Disable button during submission
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Registering...';
             
             // Add to team in Firebase
             currentData[teamKey].push(name);
             teamsRef.set(currentData)
                 .then(() => {
-                    showMessage(`${name} registered to Team ${selectedTeam}!`, 'success');
+                    const teamNames = {
+                        'team1': 'Team Alpha',
+                        'team2': 'Team Beta',
+                        'team3': 'Team Gamma'
+                    };
+                    showAlert(`✓ Successfully registered to ${teamNames[teamKey]}!`, 'success');
                     nameInput.value = '';
-                    selectedTeam = null;
-                    document.getElementById('team1Btn').classList.remove('selected');
-                    document.getElementById('team2Btn').classList.remove('selected');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Join Team';
                 })
                 .catch((error) => {
-                    showMessage('Error: ' + error.message, 'error');
+                    showAlert('Error: ' + error.message, 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Join Team';
                 });
         }
         
         // Delete member
         function deleteMember(team, name) {
-            if (confirm(`Remove ${name} from Team ${team}?`)) {
+            if (confirm(`Remove ${name} from the team?`)) {
                 const teamKey = `team${team}`;
                 currentData[teamKey] = currentData[teamKey].filter(n => n !== name);
                 teamsRef.set(currentData)
                     .then(() => {
-                        showMessage(`${name} removed from Team ${team}`, 'success');
+                        showAlert(`${name} has been removed`, 'success');
                     })
                     .catch((error) => {
-                        showMessage('Error: ' + error.message, 'error');
+                        showAlert('Error: ' + error.message, 'error');
                     });
             }
         }
         
-        // Reset all
+        // Reset all teams
         function resetAll() {
-            if (confirm('Are you sure you want to reset all teams? This cannot be undone!')) {
-                teamsRef.set({ team1: [], team2: [] })
+            const confirmed = confirm(
+                'Are you sure you want to reset all teams?\n\n' +
+                'This will remove all registered players and cannot be undone.'
+            );
+            
+            if (confirmed) {
+                teamsRef.set({ team1: [], team2: [], team3: [] })
                     .then(() => {
-                        showMessage('All teams have been reset!', 'success');
+                        showAlert('All teams have been reset', 'success');
                     })
                     .catch((error) => {
-                        showMessage('Error: ' + error.message, 'error');
+                        showAlert('Error: ' + error.message, 'error');
                     });
             }
         }
         
         // Update display
         function updateDisplay() {
-            // Update Team 1
-            const team1List = document.getElementById('team1List');
-            team1List.innerHTML = '';
-            currentData.team1.forEach(name => {
-                const li = document.createElement('li');
-                li.className = 'member-item';
-                li.innerHTML = `
-                    <span>${name}</span>
-                    <button class="delete-btn" onclick="deleteMember(1, '${name.replace(/'/g, "\\'")}')">✕</button>
-                `;
-                team1List.appendChild(li);
+            const teams = [
+                { key: 'team1', name: 'Alpha', num: 1 },
+                { key: 'team2', name: 'Beta', num: 2 },
+                { key: 'team3', name: 'Gamma', num: 3 }
+            ];
+            
+            let totalPlayers = 0;
+            
+            teams.forEach(team => {
+                const teamList = document.getElementById(`team${team.num}List`);
+                const teamCount = document.getElementById(`team${team.num}Count`);
+                const members = currentData[team.key];
+                
+                totalPlayers += members.length;
+                
+                // Update count badge
+                teamCount.textContent = `${members.length}/5`;
+                if (members.length >= 5) {
+                    teamCount.classList.add('full');
+                } else {
+                    teamCount.classList.remove('full');
+                }
+                
+                // Update members list
+                if (members.length === 0) {
+                    teamList.innerHTML = '<li class="empty-state">No members yet</li>';
+                } else {
+                    teamList.innerHTML = '';
+                    members.forEach((name, index) => {
+                        const li = document.createElement('li');
+                        li.className = 'member-item';
+                        li.innerHTML = `
+                            <span>
+                                <span class="member-number">${index + 1}</span>
+                                ${name}
+                            </span>
+                            <button class="delete-btn" onclick="deleteMember(${team.num}, '${name.replace(/'/g, "\\'")}')">
+                                Remove
+                            </button>
+                        `;
+                        teamList.appendChild(li);
+                    });
+                }
             });
             
-            // Update Team 2
-            const team2List = document.getElementById('team2List');
-            team2List.innerHTML = '';
-            currentData.team2.forEach(name => {
-                const li = document.createElement('li');
-                li.className = 'member-item';
-                li.innerHTML = `
-                    <span>${name}</span>
-                    <button class="delete-btn" onclick="deleteMember(2, '${name.replace(/'/g, "\\'")}')">✕</button>
-                `;
-                team2List.appendChild(li);
-            });
+            // Update statistics
+            document.getElementById('totalPlayers').textContent = totalPlayers;
+            document.getElementById('availableSlots').textContent = 15 - totalPlayers;
             
-            // Update counts
-            document.getElementById('team1Count').textContent = `(${currentData.team1.length}/5)`;
-            document.getElementById('team2Count').textContent = `(${currentData.team2.length}/5)`;
-            document.getElementById('team1Display').textContent = `${currentData.team1.length}/5 slots filled`;
-            document.getElementById('team2Display').textContent = `${currentData.team2.length}/5 slots filled`;
-            
-            // Disable full teams
-            document.getElementById('team1Btn').disabled = currentData.team1.length >= 5;
-            document.getElementById('team2Btn').disabled = currentData.team2.length >= 5;
+            // Disable submit button if all teams full
+            const submitBtn = document.getElementById('submitBtn');
+            if (totalPlayers >= 15) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Registration Full';
+            } else if (!submitBtn.disabled) {
+                submitBtn.textContent = 'Join Team';
+            }
         }
     </script>
 </body>

@@ -506,12 +506,22 @@
         // Listen for real-time updates
         teamsRef.on('value', (snapshot) => {
             const data = snapshot.val();
-            if (data) {
-                currentData = data;
+            
+            // FIXED: Ensure data structure is always correct
+            if (data && typeof data === 'object') {
+                currentData = {
+                    team1: Array.isArray(data.team1) ? data.team1 : [],
+                    team2: Array.isArray(data.team2) ? data.team2 : [],
+                    team3: Array.isArray(data.team3) ? data.team3 : []
+                };
             } else {
                 currentData = { team1: [], team2: [], team3: [] };
-                teamsRef.set(currentData);
+                // Initialize empty database
+                teamsRef.set(currentData).catch(error => {
+                    console.error('Error initializing database:', error);
+                });
             }
+            
             updateDisplay();
             
             // Hide loading, show content
@@ -521,7 +531,8 @@
             document.getElementById('loadingOverlay').innerHTML = `
                 <div style="color: var(--error-color);">
                     <p>⚠️ Connection Error</p>
-                    <p style="font-size: 0.9rem; margin-top: 10px;">Please check your internet connection and refresh the page.</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Error: ${error.message}</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Please check Firebase settings and refresh the page.</p>
                 </div>
             `;
             console.error('Firebase error:', error);
@@ -649,7 +660,7 @@
             }
         }
         
-        // Update display
+        // Update display - FIXED VERSION
         function updateDisplay() {
             const teams = [
                 { key: 'team1', name: 'Alpha', num: 1 },
@@ -662,7 +673,9 @@
             teams.forEach(team => {
                 const teamList = document.getElementById(`team${team.num}List`);
                 const teamCount = document.getElementById(`team${team.num}Count`);
-                const members = currentData[team.key];
+                
+                // FIXED: Safely access members array
+                const members = currentData[team.key] || [];
                 
                 totalPlayers += members.length;
                 
@@ -682,12 +695,14 @@
                     members.forEach((name, index) => {
                         const li = document.createElement('li');
                         li.className = 'member-item';
+                        // Escape single quotes in names
+                        const escapedName = name.replace(/'/g, "\\'");
                         li.innerHTML = `
                             <span>
                                 <span class="member-number">${index + 1}</span>
                                 ${name}
                             </span>
-                            <button class="delete-btn" onclick="deleteMember(${team.num}, '${name.replace(/'/g, "\\'")}')">
+                            <button class="delete-btn" onclick="deleteMember(${team.num}, '${escapedName}')">
                                 Remove
                             </button>
                         `;
